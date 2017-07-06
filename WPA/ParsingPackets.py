@@ -18,10 +18,6 @@ def GetInfoFromPcap(pcapFileName):
     dataEapol = [] #список данных с обнуленным полем mic, которые вернет функция
     version = 0
     for packet in myreader:#пробегаясь по каждому пакету в pcap-файле
-        if packet.haslayer(Dot11):
-            if packet.type == 0 and packet.subtype == 8:#определяем beacon frame
-                ssid = packet.info.decode('utf-8')#ssid, которое вернет функция
-
         if packet.haslayer(EAPOL) and packetNumber == 1:#определяем, является ли пакет EAPOL
             #и является ли он первым из всех пакетов рукопожатий
 
@@ -63,4 +59,4 @@ def GetInfoFromPcap(pcapFileName):
             isWpa1 = True
         else:
             isWpa1 = False
-    return (ssid, a2b_hex(sAddr), a2b_hex(dAddr), nonces, mics, dataEapol, isWpa1)
+    return (a2b_hex(sAddr), a2b_hex(dAddr), nonces, mics, dataEapol, isWpa1)
